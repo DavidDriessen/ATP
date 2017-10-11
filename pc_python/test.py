@@ -5,6 +5,7 @@ import time
 print("Python interface demo running")
 hw = lemonator.lemonator(2)
 led = hw.led_yellow
+hw.lcd.write("Test")
 while 1:
     led.set(1)
     time.sleep(0.5)

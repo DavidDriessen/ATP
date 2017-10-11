@@ -188,9 +188,9 @@ class GUI:
 
     def run(self):
         gameExit = False
-        containers = Containers(180, 320)
-        led = Led(250, 80, color.yellow, color.dark_yellow)
-        pad = keypad(280, 50, 200, 200).setFont(self.font).setFunction('A', led.toggle)
+        containers = Containers(180, 370)
+        led = Led(250, 130, color.yellow, color.dark_yellow)
+        pad = keypad(280, 100, 200, 200).setFont(self.font).setFunction('A', led.toggle)
 
         while not gameExit:
 
@@ -204,6 +204,9 @@ class GUI:
             self.controller.update()
             self.monitor.update()
             self.gameDisplay.fill(color.white)
+
+            self.gameDisplay.blit(self.font.render(self.plant._effectors['lcd']._text, True, color.black), (200, 20))
+
             containers.pump(1).set(self.plant._effectors['pumpA'].isOn())
             containers.pump(2).set(self.plant._effectors['pumpB'].isOn())
             containers.valve(1).set(self.plant._effectors['valveA'].isOn())
@@ -213,6 +216,7 @@ class GUI:
                             self.plant._vessels['mix'].getFluidAmount(), self.plant._vessels['b'].getFluidAmount())
             pad.draw(self.gameDisplay)
             led.draw(self.gameDisplay)
+
 
             pygame.display.update()
             self.clock.tick(60)

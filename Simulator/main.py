@@ -6,11 +6,13 @@ import rpyc
 
 class lemonatorService(rpyc.Service):
     hw = None
+    thread = None
 
     def on_connect(self):
         # code that runs when a connection is created
         # (to init the serivce, if needed)
-        self.hw = lemonator_sim_interface()
+        if self.hw is None:
+            self.hw = lemonator_sim_interface()
 
     def on_disconnect(self):
         # code that runs when the connection has already closed
@@ -21,8 +23,9 @@ class lemonatorService(rpyc.Service):
         return self.hw
 
     def exposed_run(self):  # this is an exposed method
-        thread = Thread(target=self.hw.run)
-        thread.start()
+        if self.thread is None:
+            self.thread = Thread(target=self.hw.run)
+            self.thread.start()
 
 
 from rpyc.utils.server import ThreadedServer
