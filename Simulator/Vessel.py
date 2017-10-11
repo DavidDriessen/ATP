@@ -7,6 +7,7 @@
 # Size of source mod 2**32: 2437 bytes
 from Constants import *
 
+
 class Vessel:
     """ Class to describe containers of liquids;
     two types:
@@ -14,7 +15,7 @@ class Vessel:
     - Mixture vessel (has a tap, attached with only heater effector, all types of sensors).
     """
 
-    def __init__(self, amount, colour, temperature, flowTo):
+    def __init__(self, amount, colour, temperature, flowTo=None):
         self._amount = amount
         self._colour = colour
         self._temperature = temperature
@@ -71,4 +72,3 @@ class MixtureVessel(Vessel):
             self._temperature += heatRate
         elif self._temperature > environmentTemp:
             self._temperature -= temperatureDecay
-

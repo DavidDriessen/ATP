@@ -18,8 +18,8 @@ import time
 class Plant:
     def __init__(self):
         self._vessels = {'mix': MixtureVessel(amount=500, temperature=36, colour=50, )}
-        self._vessels['a'] = Vessel(colour=0, amount=liquidMax, flowTo=self._vessels['mix'], )
-        self._vessels['b'] = Vessel(colour=100, amount=liquidMax, flowTo=self._vessels['mix'], )
+        self._vessels['a'] = Vessel(colour=0, amount=liquidMax, flowTo=self._vessels['mix'], temperature=0)
+        self._vessels['b'] = Vessel(colour=100, amount=liquidMax, flowTo=self._vessels['mix'], temperature=0)
         self._sensors = {'color': ColourSensor(self._vessels['mix']),
                          'temp': TemperatureSensor(self._vessels['mix']),
                          'level': LevelSensor(self._vessels['mix'])
