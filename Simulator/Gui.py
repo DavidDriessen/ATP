@@ -153,6 +153,7 @@ class Containers:
         pygame.draw.line(gameDisplay, color.black, (self.x + 200, self.y + 140), (self.x + 200, self.y), 4)
         for l in self.leds:
             l.draw(gameDisplay)
+            l.off()
 
     def pump(self, n):
         if n is 1:
@@ -200,7 +201,16 @@ class GUI:
             self.controller.update()
             self.monitor.update()
             self.gameDisplay.fill(color.white)
-            containers.draw(self.gameDisplay, 2000, 200, 2000)
+            if self.plant._effectors['pumpA']._pressure > 0:
+                containers.pump(1).on()
+            if self.plant._effectors['pumpB']._pressure > 0:
+                containers.pump(2).on()
+            # if self.plant._effectors['valveA']._pressure > 0:
+            #     containers.valve(1).on()
+            # if self.plant._effectors['valveB']._pressure > 0:
+            #     containers.valve(2).on()
+            containers.draw(self.gameDisplay, self.plant._vessels['a'].getFluidAmount(),
+                            self.plant._vessels['mix'].getFluidAmount(), self.plant._vessels['b'].getFluidAmount())
             pad.draw(self.gameDisplay)
             led.draw(self.gameDisplay)
 
