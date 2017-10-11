@@ -112,6 +112,10 @@ class Led:
         self.status = False
         return self
 
+    def set(self, val):
+        self.status = val
+        return self
+
     def toggle(self):
         self.status = not self.status
         return self
@@ -153,7 +157,6 @@ class Containers:
         pygame.draw.line(gameDisplay, color.black, (self.x + 200, self.y + 140), (self.x + 200, self.y), 4)
         for l in self.leds:
             l.draw(gameDisplay)
-            l.off()
 
     def pump(self, n):
         if n is 1:
@@ -201,14 +204,11 @@ class GUI:
             self.controller.update()
             self.monitor.update()
             self.gameDisplay.fill(color.white)
-            if self.plant._effectors['pumpA']._pressure > 0:
-                containers.pump(1).on()
-            if self.plant._effectors['pumpB']._pressure > 0:
-                containers.pump(2).on()
-            # if self.plant._effectors['valveA']._pressure > 0:
-            #     containers.valve(1).on()
-            # if self.plant._effectors['valveB']._pressure > 0:
-            #     containers.valve(2).on()
+            containers.pump(1).set(self.plant._effectors['pumpA'].isOn())
+            containers.pump(2).set(self.plant._effectors['pumpB'].isOn())
+            containers.valve(1).set(self.plant._effectors['valveA'].isOn())
+            containers.valve(2).set(self.plant._effectors['valveB'].isOn())
+            led.set(self.plant._effectors['ledY'].isOn())
             containers.draw(self.gameDisplay, self.plant._vessels['a'].getFluidAmount(),
                             self.plant._vessels['mix'].getFluidAmount(), self.plant._vessels['b'].getFluidAmount())
             pad.draw(self.gameDisplay)
