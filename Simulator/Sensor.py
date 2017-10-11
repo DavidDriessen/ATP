@@ -1,10 +1,3 @@
-# uncompyle6 version 2.12.0
-# Python bytecode 3.6 (3379)
-# Decompiled from: Python 2.7.12 (default, Nov 19 2016, 06:48:10) 
-# [GCC 5.4.0 20160609]
-# Embedded file name: .\Sensor.py
-# Compiled at: 2017-08-29 16:33:33
-# Size of source mod 2**32: 1866 bytes
 from Vessel import Vessel
 from math import pi
 from Constants import *
@@ -28,6 +21,36 @@ class Sensor:
     def _convertToValue(self):
         return round(self._value, 2)
 
+class KeyMatrix(Sensor):
+    def __init__(self):
+        Sensor.__init__(self, False)
+        self._value = 'x'
+
+    def update(self):
+        self._value = 'x'
+
+    def readValue(self):
+        return self._value
+
+
+    def measure(self):
+        return ''
+
+
+class Pin(Sensor):
+    def __init__(self):
+        Sensor.__init__(self, False)
+        self._value = True
+
+    def update(self):
+        self._value = True
+
+    def readValue(self):
+        return self._value
+
+
+    def measure(self):
+        return ''
 
 class ColourSensor(Sensor):
 
@@ -73,4 +96,3 @@ class LevelSensor(Sensor):
 
     def _convertToValue(self):
         return round(self._value / levelConversion * pi * 10 * 10, 2)
-

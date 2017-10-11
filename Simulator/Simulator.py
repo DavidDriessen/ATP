@@ -1,10 +1,3 @@
-# uncompyle6 version 2.11.5
-# Python bytecode 3.6 (3379)
-# Decompiled from: Python 3.6.2 (default, Jul 20 2017, 03:52:27) 
-# [GCC 7.1.1 20170630]
-# Embedded file name: .\Simulator.py
-# Compiled at: 2017-08-30 16:00:41
-# Size of source mod 2**32: 3405 bytes
 from Controller import Controller
 from Vessel import Vessel, MixtureVessel
 from Sensor import *
@@ -17,21 +10,26 @@ import time
 
 class Plant:
     def __init__(self):
-        self._vessels = {'mix': MixtureVessel(amount=500, temperature=36, colour=50, )}
-        self._vessels['a'] = Vessel(colour=0, amount=liquidMax, flowTo=self._vessels['mix'], temperature=0)
-        self._vessels['b'] = Vessel(colour=100, amount=liquidMax, flowTo=self._vessels['mix'], temperature=0)
+        self._vessels = {'mix': MixtureVessel(amount=0, temperature=36, colour=50, )}
+        self._vessels['a'] = Vessel(colour=0, temperature=environmentTemp, amount=liquidMax, flowTo=self._vessels['mix'], )
+        self._vessels['b'] = Vessel(colour=100, temperature=environmentTemp, amount=liquidMax, flowTo=self._vessels['mix'], )
         self._sensors = {'color': ColourSensor(self._vessels['mix']),
                          'temp': TemperatureSensor(self._vessels['mix']),
-                         'level': LevelSensor(self._vessels['mix'])
+                         'level': LevelSensor(self._vessels['mix']),
+                         'key': KeyMatrix(),
+                         'pin_in': Pin(),
 
                          }
         self._effectors = {'heater': Heater(self._vessels['mix']),
                            'pumpA': Pump(self._vessels['a']),
-                           'valveA': Valve(self._vessels['a']),
                            'pumpB': Pump(self._vessels['b']),
-                           'valveB': Valve(self._vessels['b'])
-
+                           'ledG': Led(),
+                           'ledY': Led(),
+                           'lcd' : Lcd()
                            }
+        self._effectors['valveA'] = Valve(self._vessels['a'], self._effectors['pumpA'])
+        self._effectors['valveB'] = Valve(self._vessels['b'], self._effectors['pumpB'])
+
 
     def update(self):
         for vessel in self._vessels.values():
@@ -49,6 +47,11 @@ class Plant:
 
         for effector in self._effectors.values():
             print('type:', type(effector), 'value:', 'on' if effector.isOn() else 'off')
+
+            if effector._text is None:
+                continue
+            else:
+                print('text on lcd -> ' + effector._text)
 
 
 class Simulator:
@@ -96,7 +99,3 @@ class Monitor:
         for effector in self._Monitor__effectors:
             self._effectorValues[effector].append(self._Monitor__effectors[effector].isOn())
 
-
-if __name__ == '__main__':
-    simulator = Simulator(True)
-    simulator.run()

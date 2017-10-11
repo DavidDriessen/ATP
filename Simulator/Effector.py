@@ -1,10 +1,3 @@
-# uncompyle6 version 2.11.5
-# Python bytecode 3.6 (3379)
-# Decompiled from: Python 3.6.2 (default, Jul 20 2017, 03:52:27) 
-# [GCC 7.1.1 20170630]
-# Embedded file name: .\Effector.py
-# Compiled at: 2017-08-29 16:43:31
-# Size of source mod 2**32: 1451 bytes
 from Vessel import Vessel, MixtureVessel
 from Constants import *
 
@@ -13,6 +6,7 @@ class Effector:
     def __init__(self, vessel):
         self._vessel = vessel
         self._value = False
+        self._text = None
 
     def switchOn(self):
         self._value = True
@@ -25,6 +19,23 @@ class Effector:
 
     def update(self):
         pass
+
+class Lcd(Effector):
+    def __init__(self):
+        Effector.__init__(self, False)
+        self._text = ''
+
+    def update(self):
+        self._value = True
+
+    def write(self, text):
+        self._text = text
+
+
+class Led(Effector):
+
+    def __init__(self):
+        Effector.__init__(self, False)
 
 
 class Pump(Effector):
@@ -46,7 +57,20 @@ class Pump(Effector):
 
 
 class Valve(Effector):
-    pass
+    def __init__(self, vessel, pump):
+        Effector.__init__(self, vessel)
+        self._pump = pump
+        self.tick = 0
+
+    def update(self):
+        if self.tick > pressureRampDown:
+            self._pump.switchOff()
+            self.tick = 0
+            self._value = False
+
+        if self._value:
+            self.tick += 1
+
 
 
 class Heater(Effector):
