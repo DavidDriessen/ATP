@@ -16,14 +16,9 @@ class Observer(Simulator):
     def __init__(self, observable):
         Simulator.__init__(self, True)
         observable.register_observer(self)
-        self.timestamp = 0
 
-    def update(self):
-        self.timestamp += 1
-        time.sleep(0)
-        print(self.timestamp, '-' * 40)
-        self._Simulator__plant.update()
-        self._Simulator__plant.printState()
+
+
 
     def notify(self, observable, *args, **kwargs):
         if args[0] == 'read_mc':
@@ -89,7 +84,6 @@ class Observer(Simulator):
         else:
             print('unknown command')
 
-        self.update()
         return val
 
 
