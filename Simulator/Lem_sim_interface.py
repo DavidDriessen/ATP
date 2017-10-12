@@ -40,6 +40,10 @@ class output_proxy:
     def write(self, text):
         self.subject.notify_observers('write_' + self.string, text)
 
+class lemonator:
+    @staticmethod
+    def lemonator():
+        return lemonator_sim_interface()
 
 
 class lemonator_sim_interface(Observer):
