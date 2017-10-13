@@ -1,3 +1,0 @@
-/jer/ATP/Simulator/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/jer/ATP/Simulator/cmake-build-debug/CMakeFiles/edit_cache.dir
-/jer/ATP/Simulator/cmake-build-debug/CMakeFiles/Simulator.dir
