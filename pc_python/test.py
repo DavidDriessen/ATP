@@ -1,4 +1,4 @@
-from Simulator.Simulator_client import lemonator
+from Simulator.Lem_sim_interface import *
 # import lemonator
 import time
 

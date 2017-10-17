@@ -1,5 +1,5 @@
 from threading import Thread
-from SimObserver import *
+from Simulator.SimObserver import *
 
 class input_proxy:
     def __init__(self, string, subject):
@@ -42,7 +42,7 @@ class output_proxy:
 
 class lemonator:
     @staticmethod
-    def lemonator():
+    def lemonator(p):
         return lemonator_sim_interface()
 
 

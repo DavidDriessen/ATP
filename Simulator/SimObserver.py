@@ -1,4 +1,4 @@
-from Simulator import *
+from Simulator.Simulator import *
 
 class Observable:
     def __init__(self):

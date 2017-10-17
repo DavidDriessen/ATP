@@ -1,5 +1,5 @@
 #import rpyc
-from Lem_sim_interface import *
+from Simulator.Lem_sim_interface import *
 
 hw = lemonator.lemonator()
 hw.lcd.write('test bericht')

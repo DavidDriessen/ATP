@@ -1,9 +1,9 @@
-from Vessel import Vessel
 from math import pi
-from Constants import *
+
+from Simulator.Constants import *
+
 
 class Sensor:
-
     def __init__(self, vessel):
         self._vessel = vessel
         self._value = 0
@@ -21,6 +21,7 @@ class Sensor:
     def _convertToValue(self):
         return round(self._value, 2)
 
+
 class KeyMatrix(Sensor):
     def __init__(self):
         Sensor.__init__(self, False)
@@ -31,7 +32,6 @@ class KeyMatrix(Sensor):
 
     def readValue(self):
         return self._value
-
 
     def measure(self):
         return ''
@@ -48,12 +48,11 @@ class Pin(Sensor):
     def readValue(self):
         return self._value
 
-
     def measure(self):
         return ''
 
-class ColourSensor(Sensor):
 
+class ColourSensor(Sensor):
     def __init__(self, vessel):
         Sensor.__init__(self, vessel)
         self._unitOfMeasure = '%'
@@ -68,7 +67,6 @@ class ColourSensor(Sensor):
 
 
 class TemperatureSensor(Sensor):
-
     def __init__(self, vessel):
         Sensor.__init__(self, vessel)
         self._unitOfMeasure = 'C'
@@ -83,7 +81,6 @@ class TemperatureSensor(Sensor):
 
 
 class LevelSensor(Sensor):
-
     def __init__(self, vessel):
         Sensor.__init__(self, vessel)
         self._unitOfMeasure = 'ml'
