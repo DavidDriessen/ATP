@@ -54,7 +54,7 @@ class lemonator_sim_interface(Observer):
         Observer.__init__(self, self.subject)
 
         self.lcd         = output_proxy('lcd', self.subject)
-        #self.keypad      = input_proxy('c', self.subject)
+        self.keypad      = input_proxy('c', self.subject)
         self.distance    = input_proxy('mm', self.subject)
         self.color       = input_proxy('rgb', self.subject)
         self.temperature = input_proxy('mc', self.subject)

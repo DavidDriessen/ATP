@@ -11,3 +11,4 @@ while 1:
     time.sleep(0.5)
     led.set(0)
     time.sleep(0.5)
+    print(hw.keypad.getc())

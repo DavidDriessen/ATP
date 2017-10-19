@@ -94,6 +94,10 @@ class keypad:
         self.buttons.get(key).setFunction(func)
         return self
 
+    def setGlobalFunction(self, func):
+        for key, btn in self.buttons.items():
+            btn.setFunction((lambda k: lambda: func(k))(key))
+
 
 class Led:
     status = False
@@ -191,24 +195,8 @@ class GUI:
         containers = Containers(180, 370)
         led = Led(250, 130, color.yellow, color.white)
         pad = keypad(280, 100, 200, 200).setFont(self.font).setFunction('A', self.plant._effectors['pumpA'].switchOn)
-        pad.setFunction('B', self.plant._effectors['pumpB'].switchOn )
-        pad.setFunction('C', self.plant._effectors['valveA'].switchOn)
-        pad.setFunction('D', self.plant._effectors['valveB'].switchOn)
-        pad.setFunction('*', self.plant._effectors['ledY'].switchOn)
-        pad.setFunction('#', self.plant._effectors['ledY'].switchOff)
+        pad.setGlobalFunction(self.plant._sensors['key'].set)
 
-        '''
-        pad.setFunction('0', )
-        pad.setFunction('1', )
-        pad.setFunction('2', )
-        pad.setFunction('3', )
-        pad.setFunction('4', )
-        pad.setFunction('5', )
-        pad.setFunction('6', )
-        pad.setFunction('7', )
-        pad.setFunction('8', )
-        pad.setFunction('9', )
-        '''
         while not gameExit:
 
             for event in pygame.event.get():
@@ -218,8 +206,8 @@ class GUI:
                     pad.check(pygame.mouse.get_pos())
 
             self.plant.update()
-            #self.controller.update()
-            #self.monitor.update()
+            # self.controller.update()
+            # self.monitor.update()
 
             # gui update
             self.gameDisplay.fill(color.white)
@@ -236,7 +224,6 @@ class GUI:
                             self.plant._vessels['mix'].getFluidAmount(), self.plant._vessels['b'].getFluidAmount())
             pad.draw(self.gameDisplay)
             led.draw(self.gameDisplay)
-
 
             pygame.display.update()
             self.clock.tick(60)

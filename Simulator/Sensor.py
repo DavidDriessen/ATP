@@ -25,13 +25,15 @@ class Sensor:
 class KeyMatrix(Sensor):
     def __init__(self):
         Sensor.__init__(self, False)
-        self._value = 'x'
+        self._value = ''
 
-    def update(self):
-        self._value = 'x'
+    def set(self, x):
+        self._value = x
 
     def readValue(self):
-        return self._value
+        v = self._value
+        self._value = ''
+        return v
 
     def measure(self):
         return ''
