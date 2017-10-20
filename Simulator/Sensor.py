@@ -45,7 +45,10 @@ class Pin(Sensor):
         self._value = True
 
     def update(self):
-        self._value = True
+        pass
+
+    def set(self, val):
+        self._value = val
 
     def readValue(self):
         return self._value

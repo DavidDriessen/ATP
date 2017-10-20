@@ -133,6 +133,19 @@ class Led:
         pygame.draw.circle(gameDisplay, color.black, (self.x, self.y), 12, 2)
 
 
+class ButtonLed(button, Led):
+    def __init__(self, x, y, activeColor, inactiveColor):
+        button.__init__(self, x, y, 50, 50)
+        Led.__init__(self, x, y, activeColor, inactiveColor)
+
+    def draw(self, gameDisplay):
+        if self.status:
+            self.color = self.activeColor
+        else:
+            self.color = self.inactiveColor
+        button.draw(self, gameDisplay)
+
+
 class Containers:
     def __init__(self, x, y, max=2000):
         self.x = x
@@ -194,6 +207,8 @@ class GUI:
         gameExit = False
         containers = Containers(180, 370)
         led = Led(250, 130, color.yellow, color.white)
+        btnled = ButtonLed(220, 200, color.blue, color.dark_blue)
+        btnled.setFunction(lambda: self.plant._sensors['pres'].set(not self.plant._sensors['pres'].readValue()))
         pad = keypad(280, 100, 200, 200).setFont(self.font).setFunction('A', self.plant._effectors['pumpA'].switchOn)
         pad.setGlobalFunction(self.plant._sensors['key'].set)
 
@@ -204,6 +219,7 @@ class GUI:
                     gameExit = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pad.check(pygame.mouse.get_pos())
+                    btnled.check(pygame.mouse.get_pos())
 
             self.plant.update()
             # self.controller.update()
@@ -219,11 +235,13 @@ class GUI:
             containers.valve(1).set(self.plant._effectors['valveA'].isOn())
             containers.valve(2).set(self.plant._effectors['valveB'].isOn())
             led.set(self.plant._effectors['ledY'].isOn())
+            btnled.set(self.plant._sensors['pres'].readValue())
 
             containers.draw(self.gameDisplay, self.plant._vessels['a'].getFluidAmount(),
                             self.plant._vessels['mix'].getFluidAmount(), self.plant._vessels['b'].getFluidAmount())
             pad.draw(self.gameDisplay)
             led.draw(self.gameDisplay)
+            btnled.draw(self.gameDisplay)
 
             pygame.display.update()
             self.clock.tick(60)

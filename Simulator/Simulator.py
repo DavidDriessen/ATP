@@ -18,7 +18,7 @@ class Plant:
                          'level': LevelSensor(self._vessels['mix']),
                          'key': KeyMatrix(),
                          'pin_in': Pin(),
-
+                         'pres': Pin()
                          }
         self._effectors = {'heater': Heater(self._vessels['mix']),
                            'pumpA': Pump(self._vessels['a']),
