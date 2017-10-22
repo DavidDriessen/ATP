@@ -1,7 +1,5 @@
-from Effector import Effector
-from Sensor import Sensor, TemperatureSensor, LevelSensor, ColourSensor
-from Constants import *
-from typing import Dict
+from Simulator.Constants import *
+
 
 class Controller:
 

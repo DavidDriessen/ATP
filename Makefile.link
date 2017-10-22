@@ -17,7 +17,7 @@ SEARCH            += $(TI-SOFTWARE)/Catch/include
 
 # add hwlib
 HWLIB             ?= $(TI-SOFTWARE)/hwlib
-include           $(HWLIB)/makefile.inc
+include           $(HWLIB)/Makefile.inc
 
 # add the RS-232 library
 RS232            := $(TI-SOFTWARE)/rs-232
@@ -29,6 +29,7 @@ INCLUDE          += $(RS232)
 
 # add the lemonator files
 SEARCH           += ../library
+SEARCH           += /usr/include/python3.6m
 HEADERS          += sr04.hpp tcs3200.hpp ds1820.hpp invert.hpp
 HEADERS          += lemonator_interface.hpp 
 HEADERS          += lemonator_hardware.hpp

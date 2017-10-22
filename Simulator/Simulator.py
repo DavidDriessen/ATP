@@ -1,11 +1,11 @@
-from Controller import Controller
-from Vessel import Vessel, MixtureVessel
-from Sensor import *
-from Effector import *
-from Constants import *
-from Gui import GUI
-from typing import Dict
 import time
+
+from Simulator.Constants import *
+from Simulator.Controller import Controller
+from Simulator.Effector import *
+from Simulator.Gui import GUI
+from Simulator.Sensor import *
+from Simulator.Vessel import Vessel, MixtureVessel
 
 
 class Plant:
@@ -18,7 +18,7 @@ class Plant:
                          'level': LevelSensor(self._vessels['mix']),
                          'key': KeyMatrix(),
                          'pin_in': Pin(),
-
+                         'pres': Pin()
                          }
         self._effectors = {'heater': Heater(self._vessels['mix']),
                            'pumpA': Pump(self._vessels['a']),

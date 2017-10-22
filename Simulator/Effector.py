@@ -1,5 +1,5 @@
-from Vessel import Vessel, MixtureVessel
-from Constants import *
+from Simulator.Vessel import Vessel, MixtureVessel
+from Simulator.Constants import *
 
 class Effector:
 
